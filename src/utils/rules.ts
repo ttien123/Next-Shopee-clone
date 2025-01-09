@@ -6,6 +6,7 @@ export const formAuthSchema = z.object({
             .string()
             .nonempty('Email là bắt buộc')
             .min(5, 'Độ dài từ 5 - 160 ký tự')
+            .email('Email không hợp lệ')
             .max(160, 'Độ dài từ 5 - 160 ký tự'),
         password: z
             .string()

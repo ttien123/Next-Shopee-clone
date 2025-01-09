@@ -10,7 +10,7 @@ const Layout = ({ children }: Props) => {
             <AuthHeader />
             <div className='bg-[#ef532a]'>
                 <div className='container bg-bgAuth flex items-center justify-end min-h-[600px] bg-no-repeat'>
-                    <div className="w-[400px] p-10 bg-white">
+                    <div className="w-[400px] p-10 bg-white rounded-sm">
                         {children}
                     </div>
                 </div>

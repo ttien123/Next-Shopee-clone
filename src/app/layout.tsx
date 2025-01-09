@@ -3,6 +3,8 @@ import { Roboto } from 'next/font/google'
 
 import './globals.css';
 import { cn } from '@/lib/utils';
+import Footer from '@/components/Footer/Footer';
+import TanstackProvider from '@/providers/TanstackProvider';
 
 const roboto = Roboto({
   display: 'swap',
@@ -23,7 +25,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body  className={cn('min-h-screen bg-background font-Roboto antialiased', roboto.variable)}>{children}</body>
+            <body  className={cn('min-h-screen bg-background font-Roboto antialiased', roboto.variable)}>
+                <TanstackProvider>
+                    {children}
+                    <Footer />
+                </TanstackProvider>
+            </body>
         </html>
     );
 }
