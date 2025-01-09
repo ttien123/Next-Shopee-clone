@@ -86,3 +86,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .container {
+    @apply max-w-[1200px] mx-auto px-4;
+  }
+}
+
+.font-Roboto {
+  font-family: var(--font-roboto);
+}
