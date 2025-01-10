@@ -18,7 +18,7 @@ const LoginForm = () => {
     });
 
     const loginMutation = useMutation({
-        mutationFn: (body: FormAuthSchema) => authApi.login(body),
+        mutationFn: (body: FormAuthSchema) => authApi.svLogin(body),
     });
 
     function onSubmit(data: FormAuthSchema) {
