@@ -8,27 +8,31 @@ import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/apis/auth.api';
 
-type LoginTypeForm = Pick<TypeAuthSchema, 'email' | 'password'>
-const loginSchema = AuthSchema.pick({
-    email: true,
-    password: true,
-})
-
-const LoginForm = () => {
-    const form = useForm<LoginTypeForm>({
-        resolver: zodResolver(loginSchema),
+const RegisterSchema = AuthSchema.refine(
+    (values) => {
+      return values.password === values.confirm_password;
+    },
+    {
+      message: "Nhập lại mật khẩu không khớp",
+      path: ["confirm_password"],
+    }
+  )
+const RegisterForm = () => {
+    const form = useForm<TypeAuthSchema>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: '',
             password: '',
+            confirm_password: '',
         },
     });
 
-    const loginMutation = useMutation({
-        mutationFn: (body: LoginTypeForm) => authApi.svLogin(body),
+    const registerMutation = useMutation({
+        mutationFn: (body: TypeAuthSchema) => authApi.svRegister(body),
     });
 
-    function onSubmit(data: LoginTypeForm) {
-        loginMutation.mutate(data, {
+    function onSubmit(data: TypeAuthSchema) {
+        registerMutation.mutate(data, {
             onSuccess: (data) => {
                 console.log(data);
             },
@@ -38,7 +42,7 @@ const LoginForm = () => {
                     Object.keys(formError).forEach((key) => {
                         form.setError(key as any, {
                             message: formError[key as any],
-                            type: 'Server'
+                            type: 'Server',
                         });
                     });
                 }
@@ -75,18 +79,31 @@ const LoginForm = () => {
                                 </FormItem>
                             )}
                         />
+
+                        <FormField
+                            control={form.control}
+                            name="confirm_password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input type="password" placeholder="Confirm Password" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         <ButtonCustom
                             type="submit"
                             className=" flex justify-center items-center w-full py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600"
                         >
-                            Đăng nhập
+                            Đăng Ký
                         </ButtonCustom>
                     </form>
                 </Form>
-               
             </div>
         </div>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

@@ -6,14 +6,21 @@ export const URL_REGISTER = '/register';
 export const URL_LOGOUT = '/logout';
 export const URL_REFRESH_TOKEN = '/refresh-access-token';
 
+type FormAuth = { email: string; password: string }
+
 const authApi = {
-    registerAccount(body: { email: string; password: string }) {
+    register(body: FormAuth) {
         return http.post<AuthResponse>(URL_REGISTER, body);
     },
-    login(body: { email: string; password: string }) {
+    svRegister(body: FormAuth) {
+        return http.post<AuthResponse>('/api/auth/register', body, {
+            baseUrl: ''
+        });
+    },
+    login(body: FormAuth) {
         return http.post<AuthResponse>(URL_LOGIN, body);
     },
-    svLogin(body: { email: string; password: string }) {
+    svLogin(body: FormAuth) {
         return http.post<AuthResponse>('/api/auth/login', body, {
             baseUrl: ''
         });

@@ -3,11 +3,12 @@ import authApi from "@/apis/auth.api";
 import { HttpError } from "@/utils/http";
 import { isAxiosError } from "axios";
 
+
 export async function POST(request: Request) {
   const body = (await request.json()) as { email: string; password: string;};
   const cookieStore = cookies();
   try {
-    const data = await authApi.login(body);
+    const data = await authApi.register(body);
     const { access_token: accessToken, refresh_token: refreshToken, expires_refresh_token, expires } = data.data.data;
     const getRealAccessToken = accessToken.split(' ')[1]
     cookieStore.set("accessToken", getRealAccessToken, {
@@ -27,17 +28,17 @@ export async function POST(request: Request) {
     return Response.json(data.data);
   } catch (error) {
     if (isAxiosError(error)) {
-          return Response.json({
-            status: error?.status,
-            data: error?.response?.data
-          }, {
-            status: error?.status
-          })
-        } else {
-          return Response.json({
-            message: "Có lỗi xảy ra",
-            status: 500,
-          });
-        }
-      }
+      return Response.json({
+        status: error?.status,
+        data: error?.response?.data
+      }, {
+        status: error?.status
+      })
+    } else {
+      return Response.json({
+        message: "Có lỗi xảy ra",
+        status: 500,
+      });
+    }
+  }
 }
