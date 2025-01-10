@@ -28,7 +28,7 @@ export class Http {
 
     async post<ResponseType>(url: string, params?: any, options: { baseUrl?: string } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
-        return await axios.post<ResponseType>(`${baseURL}${url}`, params);
+        return await this.instance.post<ResponseType>(`${baseURL}${url}`, params);
     }
 }
 
