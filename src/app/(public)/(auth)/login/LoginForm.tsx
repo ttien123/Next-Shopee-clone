@@ -7,6 +7,7 @@ import { AuthSchema, TypeAuthSchema } from '@/utils/rules';
 import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/apis/auth.api';
+import { useRouter } from 'next/navigation';
 
 type LoginTypeForm = Pick<TypeAuthSchema, 'email' | 'password'>
 const loginSchema = AuthSchema.pick({
@@ -15,6 +16,7 @@ const loginSchema = AuthSchema.pick({
 })
 
 const LoginForm = () => {
+    const router = useRouter()
     const form = useForm<LoginTypeForm>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -31,6 +33,7 @@ const LoginForm = () => {
         loginMutation.mutate(data, {
             onSuccess: (data) => {
                 console.log(data);
+                router.push('/user/profile')
             },
             onError: (error: any) => {
                 const formError = error?.response?.data.data.data

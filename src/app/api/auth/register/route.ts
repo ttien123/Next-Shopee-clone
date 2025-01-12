@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import authApi from "@/apis/auth.api";
-import { HttpError } from "@/utils/http";
 import { isAxiosError } from "axios";
+import { handleSplitAccessToken } from "@/lib/utils";
 
 
 export async function POST(request: Request) {
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   try {
     const data = await authApi.register(body);
     const { access_token: accessToken, refresh_token: refreshToken, expires_refresh_token, expires } = data.data.data;
-    const getRealAccessToken = accessToken.split(' ')[1]
+    const getRealAccessToken = handleSplitAccessToken(accessToken)
     cookieStore.set("accessToken", getRealAccessToken, {
       path: "/",
       httpOnly: true,
