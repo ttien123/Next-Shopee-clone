@@ -7,6 +7,7 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
         defaultOptions: {
             queries: {
                 refetchOnWindowFocus: false,
+                retry: 0
             },
         },
     });

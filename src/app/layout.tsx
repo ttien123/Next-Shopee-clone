@@ -5,6 +5,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/Footer/Footer';
 import TanstackProvider from '@/providers/TanstackProvider';
+import ClientSideToastContainer from '@/providers/ToashProvider';
 
 const roboto = Roboto({
   display: 'swap',
@@ -27,6 +28,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body  className={cn('min-h-screen bg-background font-Roboto antialiased', roboto.variable)}>
                 <TanstackProvider>
+                <ClientSideToastContainer />
                     {children}
                     <Footer />
                 </TanstackProvider>

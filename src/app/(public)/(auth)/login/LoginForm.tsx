@@ -8,6 +8,7 @@ import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/apis/auth.api';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 type LoginTypeForm = Pick<TypeAuthSchema, 'email' | 'password'>
 const loginSchema = AuthSchema.pick({
@@ -32,7 +33,6 @@ const LoginForm = () => {
     function onSubmit(data: LoginTypeForm) {
         loginMutation.mutate(data, {
             onSuccess: (data) => {
-                console.log(data);
                 router.push('/user/profile')
             },
             onError: (error: any) => {
@@ -48,6 +48,13 @@ const LoginForm = () => {
             },
         });
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+        }
+    }, [])
 
     return (
         <div>

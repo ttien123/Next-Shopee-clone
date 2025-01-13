@@ -1,16 +1,34 @@
 'use client';
+import authApi from '@/apis/auth.api';
 import userApi from '@/apis/user.api';
 import { useQuery } from '@tanstack/react-query';
 
 const UserForm = () => {
-    const { data: profileData } = useQuery({
+    const { data:profile , refetch } = useQuery({
         queryKey: ['profile'],
         queryFn: userApi.getProfile,
+        
     });
 
-    console.log(profileData);
+    const { data: dataProduct, refetch: agvdsgdsg } = useQuery({
+        queryKey: ['product'],
+        queryFn: authApi.getProductDetail,
+    });
+
+    console.log('profile', profile);
+    console.log('product', dataProduct);
     
-    return <div>UserForm</div>;
+
+    const handleClick = () => {
+        refetch()
+        agvdsgdsg()
+    }
+
+    return <div>
+        <button onClick={handleClick}>click</button>
+        UserForm
+        {/* <h4>{profileData?.data?.data[0].price}</h4> */}
+        </div>;
 };
 
 export default UserForm;

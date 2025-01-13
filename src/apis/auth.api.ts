@@ -1,4 +1,4 @@
-import { AuthResponse } from "@/types/auth.type";
+import { AuthResponse, RefreshTokenResponse } from "@/types/auth.type";
 import http from "@/utils/http";
 
 export const URL_LOGIN = '/login';
@@ -24,6 +24,17 @@ const authApi = {
         return http.post<AuthResponse>('/api/auth/login', body, {
             baseUrl: ''
         });
+    },
+    svRefreshToken() {
+        return http.post<AuthResponse>('/api/auth/refresh-token', {
+            baseUrl: ''
+        });
+    },
+    refreshToken(body: { refresh_token: string }) {
+        return http.post<RefreshTokenResponse>('/refresh-access-token', body);
+    },
+    getProductDetail() {
+        return http.get(`/purchases?status=0`);
     },
     // logout() {
     //     return http.post(URL_LOGOUT);

@@ -11,4 +11,9 @@ export type AuthResponse = {
     }
 }
 
-// export type RefreshTokenResponse = SuccessResponse<{ access_token: string }>;
+export type RefreshTokenResponse = {
+    message: string;
+    data: {
+        access_token: string;
+    }
+};
