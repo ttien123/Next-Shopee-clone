@@ -1,4 +1,4 @@
-import { user } from "@/types/user.type";
+import { User } from "@/types/user.type";
 
 export const setAccessTokenToLS = (access_token: string) => {
     localStorage.setItem('access_token', access_token);
@@ -14,6 +14,11 @@ export const clearLS = () => {
     // window.location.replace('/login');
     window.location.href = '/login';
 };
+export const clearLSNoRedirect = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('profile');
+};
 
 export const getAccessTokenFromLS = () => localStorage.getItem('access_token') || '';
 export const getRefreshTokenFromLS = () => localStorage.getItem('refresh_token') || '';
@@ -23,6 +28,6 @@ export const getProfileFromLS = () => {
     return result ? JSON.parse(result) : null;
 };
 
-export const setProfileToLS = (profile: user) => {
+export const setProfileToLS = (profile: User) => {
     localStorage.setItem('profile', JSON.stringify(profile));
 };

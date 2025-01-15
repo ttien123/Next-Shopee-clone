@@ -1,6 +1,6 @@
 type Role = 'User' | 'Admin';
 
-export interface user {
+export interface User {
     _id: string;
     roles: Role[];
     email: string;
