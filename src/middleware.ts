@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
     }
     if (refreshToken) {
-        if (unAuthPaths.some((path) => pathname.startsWith(path))) {
+        if (unAuthPaths.some((path) => pathname.startsWith(path)) && refreshToken) {
             return NextResponse.redirect(new URL(`/`, request.url));
         }
     }
