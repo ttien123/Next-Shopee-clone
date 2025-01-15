@@ -19,7 +19,7 @@ export class Http {
             headers: {
                 'Content-Type': 'application/json',
                 'expire-access-token': 10,
-                'expire-refresh-token': 20
+                'expire-refresh-token': 60*60
             },
         });
 

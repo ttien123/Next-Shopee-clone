@@ -1,4 +1,4 @@
-import { user } from './user.type';
+import { User } from './user.type';
 
 export type AuthResponse = {
     message: string;
@@ -7,7 +7,7 @@ export type AuthResponse = {
         refresh_token: string;
         expires_refresh_token: number;
         expires: number;
-        user: user;
+        user: User;
     }
 }
 
