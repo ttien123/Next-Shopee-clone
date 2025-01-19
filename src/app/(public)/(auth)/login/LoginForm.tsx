@@ -10,7 +10,7 @@ import authApi from '@/apis/auth.api';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import useSetProfile from '@/store/auth.store';
-import { setProfileToLS } from '@/utils/storage';
+import { clearLSNoRedirect, setProfileToLS } from '@/utils/storage';
 
 type LoginTypeForm = Pick<TypeAuthSchema, 'email' | 'password'>
 const loginSchema = AuthSchema.pick({
@@ -56,10 +56,10 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
+            clearLSNoRedirect()
+            setProfile(null)
         }
-    }, [])
+    }, [setProfile])
 
     return (
         <div>
