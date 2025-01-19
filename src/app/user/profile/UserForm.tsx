@@ -1,7 +1,9 @@
 'use client';
 import authApi from '@/apis/auth.api';
 import userApi from '@/apis/user.api';
+import NavHeader from '@/app/(public)/(home)/components/NavHeader/NavHeader';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
 const UserForm = () => {
     const { data:profile , refetch } = useQuery({
@@ -25,8 +27,10 @@ const UserForm = () => {
     }
 
     return <div>
+        <NavHeader />
         <button onClick={handleClick}>click</button>
         UserForm
+        <Link href={'/'}>home</Link>
         {/* <h4>{profileData?.data?.data[0].price}</h4> */}
         </div>;
 };

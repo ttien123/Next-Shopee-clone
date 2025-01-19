@@ -5,7 +5,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/Footer/Footer';
 import TanstackProvider from '@/providers/TanstackProvider';
-import ClientSideToastContainer from '@/providers/ToashProvider';
+import ClientSideToastContainer from '@/providers/ToastProvider';
 
 const roboto = Roboto({
   display: 'swap',

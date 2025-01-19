@@ -33,6 +33,16 @@ const authApi = {
     refreshToken(body: { refresh_token: string }) {
         return http.post<RefreshTokenResponse>('/refresh-access-token', body);
     },
+    svLogout(accessToken: string) {
+        return http.post<AuthResponse>('/api/auth/logout', accessToken, {
+            baseUrl: '',
+        });
+    },
+    logout(accessToken: string) {
+        return http.post(URL_LOGOUT, null, { headers: {
+            authorization: `Bearer ${accessToken}`
+        } });
+    },
     getProductDetail() {
         return http.get(`/purchases?status=0`);
     },

@@ -4,7 +4,7 @@ import authApi from "@/apis/auth.api";
 import { handleSplitAccessToken } from "@/lib/utils";
 import { isAxiosError } from "axios";
 
-export async function POST(request: Request) {
+export async function POST() {
   const cookieStore = cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
   if (!refreshToken) {
