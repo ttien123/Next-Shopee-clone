@@ -9,6 +9,8 @@ import { useMutation } from '@tanstack/react-query';
 import authApi from '@/apis/auth.api';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import useSetProfile from '@/store/auth.store';
+import { clearLSNoRedirect, setProfileToLS } from '@/utils/storage';
 
 type LoginTypeForm = Pick<TypeAuthSchema, 'email' | 'password'>
 const loginSchema = AuthSchema.pick({
@@ -18,6 +20,7 @@ const loginSchema = AuthSchema.pick({
 
 const LoginForm = () => {
     const router = useRouter()
+    const { setProfile } = useSetProfile()
     const form = useForm<LoginTypeForm>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -33,7 +36,9 @@ const LoginForm = () => {
     function onSubmit(data: LoginTypeForm) {
         loginMutation.mutate(data, {
             onSuccess: (data) => {
-                router.push('/user/profile')
+                setProfile(data.data.data.user)
+                setProfileToLS(data.data.data.user)
+                router.push('/')
             },
             onError: (error: any) => {
                 const formError = error?.response?.data.data.data
@@ -51,10 +56,10 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
+            clearLSNoRedirect()
+            setProfile(null)
         }
-    }, [])
+    }, [setProfile])
 
     return (
         <div>
