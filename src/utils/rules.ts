@@ -20,4 +20,17 @@ export const AuthSchema = z.object({
             .max(160, 'Độ dài từ 5 - 160 ký tự')
     })
 
+export const SchemaPrice = z.object({
+        price_min: z.string(),
+        price_max: z.string()
+    }).refine((data) => {
+        if (data.price_min !== '' && data.price_max !== '') {
+            return Number(data.price_max) >= Number(data.price_min);
+        }
+        return data.price_min !== '' || data.price_max !== '';
+    },{
+        message: "Giá không phù hợp",
+        path: ["price_min"],
+      });
 export type TypeAuthSchema = z.infer<typeof AuthSchema>
+export type TypeSchemaPrice = z.infer<typeof SchemaPrice>

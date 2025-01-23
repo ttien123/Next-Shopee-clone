@@ -88,9 +88,10 @@ export class Http {
                                     });
                                 });
                             }
-                            if (typeof window !== 'undefined') {
-                                this.accessToken = '';
-                                clearLS()
+                            if (typeof window !== 'undefined') {                               
+                                return this.instance.post('/api/auth/logout', this.accessToken || '').then(() => {
+                                    clearLS();
+                                })
                             }
                         }
                     }
@@ -109,9 +110,14 @@ export class Http {
         };
         return await this.instance.post<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
-    async get<ResponseType>(url: string, params?: any, options: { baseUrl?: string } = {}) {
+    async get<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
-        return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params });
+        const configHeader = {
+            headers: {
+                ...options?.headers,
+            },
+        };
+        return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
     }
 
     private async handleRefreshToken() {
