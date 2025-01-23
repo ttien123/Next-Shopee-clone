@@ -6,7 +6,7 @@ import { handleSplitAccessToken } from "@/lib/utils";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as { email: string; password: string;};
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   try {
     const data = await authApi.register(body);
     const { access_token: accessToken, refresh_token: refreshToken, expires_refresh_token, expires } = data.data.data;
