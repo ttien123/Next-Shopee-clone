@@ -88,9 +88,10 @@ export class Http {
                                     });
                                 });
                             }
-                            if (typeof window !== 'undefined') {
-                                this.accessToken = '';
-                                clearLS()
+                            if (typeof window !== 'undefined') {                               
+                                return this.instance.post('/api/auth/logout', this.accessToken || '').then(() => {
+                                    clearLS();
+                                })
                             }
                         }
                     }
