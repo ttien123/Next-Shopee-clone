@@ -29,7 +29,6 @@ const Header = () => {
                             </g>
                         </svg>
                     </Link>
-                    <Link href={'/user/profile'}>profile</Link>
                     <form className="col-span-9">
                         <div className="bg-white rounded-sm p-1 flex">
                             <input
