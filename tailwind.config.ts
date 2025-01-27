@@ -61,7 +61,17 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		keyframes: {
+			"loading": {
+				"0%": { transform: "translateY(2px)" },
+				"50%": { transform: "translateY(-2px)" },
+				"100%": { transform: "translateY(2px)" }
+			}
+		},
+		animation: {
+			"loading": "loading 0.4s linear infinite"
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

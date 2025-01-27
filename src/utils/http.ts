@@ -119,6 +119,24 @@ export class Http {
         };
         return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
     }
+    async put<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
+        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const configHeader = {
+            headers: {
+                ...options?.headers,
+            },
+        };
+        return await this.instance.put<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
+    }
+    async delete<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
+        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const configHeader = {
+            headers: {
+                ...options?.headers,
+            },
+        };
+        return await this.instance.delete<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
+    }
 
     private async handleRefreshToken() {
         return this.instance.post<RefreshTokenResponse>('/api/auth/refresh-token').then((res) => {

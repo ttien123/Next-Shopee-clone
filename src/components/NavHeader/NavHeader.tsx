@@ -3,7 +3,7 @@ import authApi from '@/apis/auth.api';
 import useSetProfile from '@/store/auth.store';
 import { User } from '@/types/user.type';
 import { clearLSNoRedirect, getAccessTokenFromLS, getProfileFromLS } from '@/utils/storage';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -11,13 +11,14 @@ import { useEffect, useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { usePathname, useRouter } from 'next/navigation';
 import { privatePaths } from '@/middleware';
+import { purchasesStatus } from '@/constants/purchase';
 
 const NavHeader = () => {
-    const [localProfile, setLocalProfile] = useState<User | null>(null);
+    const [localProfile, setLocalProfile] = useState<User | null | undefined>(undefined);
     const pathname = usePathname();
     const router = useRouter()
     const {profile, setProfile} = useSetProfile()
-    // const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
     const logoutMutation = useMutation({
         mutationFn: (accessToken: string) => authApi.svLogout(accessToken),
@@ -26,7 +27,7 @@ const NavHeader = () => {
             if (privatePaths.some((path) => pathname.startsWith(path))) {
                 router.push('/login');
             }
-            // queryClient.removeQueries({ queryKey: ['purchase', { status: purchasesStatus.inCart }] });
+            queryClient.removeQueries({ queryKey: ['purchase', { status: purchasesStatus.inCart }] });
         },
         onError: (error) => {
             console.log('error', error);
@@ -42,42 +43,7 @@ const NavHeader = () => {
     }, [profile]);
 
     return (
-        <div className="flex justify-end">
-            {/* <Popover
-                className="ml-2 flex items-center py-1 hover:text-white/70 cursor-pointer"
-                renderPopover={
-                    <div className="bg-white relative shadow-md rounded-sm border border-gray-200">
-                        <Link
-                            to={path.profile}
-                            className="block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left"
-                        >
-                            Tài khoản của tôi
-                        </Link>
-                        <Link
-                            to={path.historyPurchase}
-                            className="block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left"
-                        >
-                            Đơn mua
-                        </Link>
-                        <button
-                            onClick={handleLogout}
-                            className="block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left"
-                        >
-                            Đăng xuất
-                        </button>
-                    </div>
-                }
-            >
-                <div className="w-6 h-6 mr-2 flex-shrink-0">
-                    <img
-                        src={getAvatarUrl(profile?.avatar)}
-                        alt="avatar"
-                        className="w-full h-full object-cover rounded-full"
-                    />
-                </div>
-                <div>{profile?.email}</div>
-            </Popover> */}
-
+        <div className="flex justify-end min-h-[24px]">
             {localProfile && (
                 <TooltipProvider delayDuration={0}>
                     <Tooltip>
@@ -94,7 +60,7 @@ const NavHeader = () => {
                             <div>{localProfile?.email}</div>
                         </TooltipTrigger>
                         <TooltipContent className='relative pt-2'>
-                            <span className='absolute z-10 top-[-12px] left-[50%] translate-x-[-50%] border-[11px] border-x-transparent border-t-transparent border-b-white'></span>
+                            <span className='absolute z-10 top-[-11px] left-[50%] translate-x-[-50%] border-[11px] border-x-transparent border-t-transparent border-b-white'></span>
                             <div className="bg-white relative text-black shadow-md rounded-sm border border-gray-200">
                                 <Link
                                     href={'/user/profile'}
@@ -117,7 +83,7 @@ const NavHeader = () => {
                 </TooltipProvider>
             )}
 
-            {!localProfile && (
+            {!localProfile && localProfile !== undefined && (
                 <div className="flex items-center">
                     <Link href={'/register'} className="mx-3 capitalize hover:text-white/70">
                         Đăng ký

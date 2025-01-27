@@ -1,18 +1,18 @@
-'use client'
-import { QueryConfig } from "@/hooks/useQueryConfig";
-import { Category } from "@/types/category.type";
-import Link from "next/link";
+'use client';
+import { QueryConfig } from '@/hooks/useQueryConfig';
+import { Category } from '@/types/category.type';
+import Link from 'next/link';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 
 import queryString from 'query-string';
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SchemaPrice } from "@/utils/rules";
-import { useRouter } from "next/navigation";
-import ButtonCustom from "@/components/ButtonCustom/ButtonCustom";
-import InputNumber from "@/components/InputNumber/InputNumber";
-import RatingStars from "../RatingStars/RatingStars";
-import { omit } from "lodash";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { PriceSchema } from '@/utils/rules';
+import { useRouter } from 'next/navigation';
+import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
+import InputNumber from '@/components/InputNumber/InputNumber';
+import RatingStars from '../RatingStars/RatingStars';
+import { omit } from 'lodash';
 interface Props {
     queryConfig: QueryConfig;
     categories: Category[];
@@ -21,35 +21,36 @@ interface Props {
 type FormData = {
     price_max: string;
     price_min: string;
-}
+};
 
-
-
-const AsideFilter = ({  categories, queryConfig }: Props) => {
+const AsideFilter = ({ categories, queryConfig }: Props) => {
     const { category } = queryConfig;
-    const router = useRouter()
+    const router = useRouter();
     const form = useForm<FormData>({
-        resolver: zodResolver(SchemaPrice),
+        resolver: zodResolver(PriceSchema),
         defaultValues: {
             price_max: '',
-            price_min: ''
+            price_min: '',
         },
     });
 
     function onSubmit(data: FormData) {
-        router.push(`/?${queryString.stringify({ ...queryConfig, price_max: data.price_max, price_min: data.price_min })}`);
+        router.push(
+            `/?${queryString.stringify({ ...queryConfig, price_max: data.price_max, price_min: data.price_min })}`,
+        );
     }
-    
+
     const handleRemoveAll = () => {
         form.reset(),
-        router.push(`/?${queryString.stringify(omit(queryConfig, ['price_min', 'price_max', 'category', 'rating_filter']),).toString()}`)
+            router.push(
+                `/?${queryString
+                    .stringify(omit(queryConfig, ['price_min', 'price_max', 'category', 'rating_filter']))
+                    .toString()}`,
+            );
     };
     return (
         <div className="py-4">
-            <Link
-                href={'/'}
-                className={`flex items-center font-bold ${!true ? 'text-orange' : ''}`}
-            >
+            <Link href={'/'} className={`flex items-center font-bold ${!true ? 'text-orange' : ''}`}>
                 <svg viewBox="0 0 12 10" className="w-3 h-4 mr-3 fill-current icon-all-cate">
                     <g fillRule="evenodd" stroke="none" strokeWidth={1}>
                         <g transform="translate(-373 -208)">
@@ -74,10 +75,12 @@ const AsideFilter = ({  categories, queryConfig }: Props) => {
                             <Link
                                 href={{
                                     pathname: '/',
-                                    search: queryString.stringify({
-                                        ...queryConfig,
-                                        category: categoryItem._id,
-                                    }).toString(),
+                                    search: queryString
+                                        .stringify({
+                                            ...queryConfig,
+                                            category: categoryItem._id,
+                                        })
+                                        .toString(),
                                 }}
                                 className={`relative px-2 ${isActive ? 'text-orange font-semibold' : ''}`}
                             >
@@ -149,18 +152,18 @@ const AsideFilter = ({  categories, queryConfig }: Props) => {
                                     <FormItem>
                                         <FormControl>
                                             <InputNumber
-                                                    type="text"
-                                                    className="grow"
-                                                    placeholder="₫ ĐẾN"
-                                                    classNameInput="p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-                                                    onChange={(event) => {
-                                                        field.onChange(event);
-                                                        form.trigger('price_min');
-                                                    }}
-                                                    value={field.value}
-                                                    classNameError="hidden"
-                                                    ref={field.ref}
-                                                />
+                                                type="text"
+                                                className="grow"
+                                                placeholder="₫ ĐẾN"
+                                                classNameInput="p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
+                                                onChange={(event) => {
+                                                    field.onChange(event);
+                                                    form.trigger('price_min');
+                                                }}
+                                                value={field.value}
+                                                classNameError="hidden"
+                                                ref={field.ref}
+                                            />
                                         </FormControl>
                                     </FormItem>
                                 )}

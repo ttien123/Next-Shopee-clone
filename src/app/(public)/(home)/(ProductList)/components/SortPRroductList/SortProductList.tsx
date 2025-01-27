@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import { productListConfig } from '@/types/product.type';
 import Link from 'next/link';
 import { QueryConfig } from '@/hooks/useQueryConfig';
-import { sortBy, order as orderConstant } from '@/app/constants/product';
+import { sortBy, order as orderConstant } from '@/constants/product';
 import queryString from 'query-string';
 import { useRouter } from 'next/navigation';
 // import { omit } from 'lodash';
