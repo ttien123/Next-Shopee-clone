@@ -1,4 +1,4 @@
-import { QueryConfig } from '@/hooks/useQueryConfig';
+import { QueryConfig } from '@/types/utils.type';
 import classNames from 'classnames';
 import Link from 'next/link';
 import queryString from 'query-string';

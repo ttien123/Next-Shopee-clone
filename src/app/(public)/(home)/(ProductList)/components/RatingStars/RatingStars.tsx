@@ -1,24 +1,21 @@
-import { QueryConfig } from "@/hooks/useQueryConfig";
-import { useRouter } from "next/navigation";
-import queryString from "query-string";
-
-
+import { QueryConfig } from '@/types/utils.type';
+import Link from 'next/link';
+import queryString from 'query-string';
 interface Props {
     queryConfig: QueryConfig;
 }
 
 const RatingStars = ({ queryConfig }: Props) => {
-    const router = useRouter()
-    const handleFilterStar = (ratingFilter: Number) => {
-        router.push(`/?${queryString.stringify({ ...queryConfig, rating_filter: ratingFilter })}`);
-    };
     return (
         <ul className="my-3">
             {Array(5)
                 .fill(0)
                 .map((_, index) => (
                     <li className="py-1 pl-2" key={index}>
-                        <button className="flex items-center text-sm" onClick={() => handleFilterStar(5 - index)}>
+                        <Link
+                            className="flex items-center text-sm"
+                            href={`/?${queryString.stringify({ ...queryConfig, rating_filter: 5 - index })}`}
+                        >
                             {Array(5)
                                 .fill(0)
                                 .map((_, indexStar) => {
@@ -91,7 +88,7 @@ const RatingStars = ({ queryConfig }: Props) => {
                                     );
                                 })}
                             {index !== 0 && <span>Trở lên</span>}
-                        </button>
+                        </Link>
                     </li>
                 ))}
         </ul>
