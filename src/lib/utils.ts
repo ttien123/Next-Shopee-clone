@@ -64,3 +64,7 @@ export const handleQueryConfig = (queryParams: QueryConfig) => {
     );
     return queryConfig;
 };
+
+export const getIdFromSlugUrl = (slugUrl: string) => {
+  return slugUrl.split('-i-')[1]
+}
