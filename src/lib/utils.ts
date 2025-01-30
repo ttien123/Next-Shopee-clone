@@ -1,4 +1,8 @@
+import { QueryConfig } from "@/types/utils.type"
 import { clsx, type ClassValue } from "clsx"
+import isUndefined from 'lodash/isUndefined';
+
+import omitBy from "lodash/omitBy"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -40,4 +44,23 @@ export const getIdFromNameId = (nameId: string) => {
   const arr = nameId.split('-i-');
 
   return arr[arr.length - 1];
+};
+
+export const handleQueryConfig = (queryParams: QueryConfig) => {
+    const queryConfig: QueryConfig = omitBy(
+        {
+            page: queryParams?.page || '1',
+            limit: queryParams?.limit || '20',
+            sort_by: queryParams?.sort_by,
+            exclude: queryParams?.exclude,
+            name: queryParams?.name,
+            order: queryParams?.order,
+            rating_filter: queryParams?.rating_filter,
+            price_max: queryParams?.price_max,
+            price_min: queryParams?.price_min,
+            category: queryParams?.category,
+        },
+        isUndefined,
+    );
+    return queryConfig;
 };
