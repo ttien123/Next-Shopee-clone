@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/
 import { purchasesStatus } from '@/constants/purchase';
 import { useQuery } from '@tanstack/react-query';
 import purchaseApi from '@/apis/purchase.api';
-import useSetProfile from '@/store/auth.store';
+import useGetStore from '@/store/store';
 import { formatCurrency, generateNameId } from '@/lib/utils';
 import noProduct from '../../../public/bgCart.png';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ import useSearchProducts from '@/hooks/useSearchProducts';
 const MAX_PURCHASE = 5;
 
 const Header = () => {
-    const { profile } = useSetProfile();
+    const { profile } = useGetStore();
     const { onSubmitSearch, register, reset } = useSearchProducts();
 
     const { data: purchaseInCartData } = useQuery({

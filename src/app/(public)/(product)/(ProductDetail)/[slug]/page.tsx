@@ -1,7 +1,7 @@
 import productApi from '@/apis/product.api';
 import { formatCurrency, formatNumberToSocialStyle, getIdFromSlugUrl, rateSale } from '@/lib/utils';
 import { Product as ProductType, ProductList, productListConfig } from '@/types/product.type';
-import Product from '../(ProductList)/components/Product/Product';
+import Product from '../../(ProductList)/components/Product/Product';
 import ProductRating from '@/components/ProductRating/ProductRating';
 import ImageProduct from './components/ImageProduct/ImageProduct';
 import QuantityProduct from './components/QuantityProduct/QuantityProduct';

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const privatePaths = ['/user/profile', '/user/password', '/user/purchase'];
+export const privatePaths = ['/user/profile', '/user/password', '/user/purchase', '/cart'];
 
 const unAuthPaths = ['/login', '/register'];
 

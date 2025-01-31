@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Product as ProductType } from '@/types/product.type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import purchaseApi from '@/apis/purchase.api';
-import useSetProfile from '@/store/auth.store';
+import useGetStore from '@/store/store';
 import { purchasesStatus } from '@/constants/purchase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
@@ -13,11 +13,12 @@ interface props {
     product: ProductType;
 }
 const QuantityProduct = ({ product }: props) => {
+    const { setProductChoice } = useGetStore();
     const [buyCount, setBuyCount] = useState(1);
     const queryClient = useQueryClient();
 
     const router = useRouter();
-    const { profile } = useSetProfile();
+    const { profile } = useGetStore();
     const handleBuyCount = (value: number) => {
         setBuyCount(value);
     };
@@ -51,6 +52,7 @@ const QuantityProduct = ({ product }: props) => {
                 product_id: product?._id as string,
             });
             const purchase = res.data.data;
+            setProductChoice(purchase);
             router.push('/cart');
         } else {
             router.push('/login');

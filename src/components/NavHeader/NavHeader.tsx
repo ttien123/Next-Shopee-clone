@@ -1,6 +1,6 @@
 'use client';
 import authApi from '@/apis/auth.api';
-import useSetProfile from '@/store/auth.store';
+import useGetStore from '@/store/store';
 import { User } from '@/types/user.type';
 import { clearLSNoRedirect, getAccessTokenFromLS, getProfileFromLS } from '@/utils/storage';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,8 +16,8 @@ import { purchasesStatus } from '@/constants/purchase';
 const NavHeader = () => {
     const [localProfile, setLocalProfile] = useState<User | null | undefined>(undefined);
     const pathname = usePathname();
-    const router = useRouter()
-    const {profile, setProfile} = useSetProfile()
+    const router = useRouter();
+    const { profile, setProfile } = useGetStore();
     const queryClient = useQueryClient();
 
     const logoutMutation = useMutation({
@@ -31,7 +31,7 @@ const NavHeader = () => {
         },
         onError: (error) => {
             console.log('error', error);
-        }
+        },
     });
 
     const handleLogout = () => {
@@ -59,8 +59,8 @@ const NavHeader = () => {
                             </div>
                             <div>{localProfile?.email}</div>
                         </TooltipTrigger>
-                        <TooltipContent className='relative pt-2'>
-                            <span className='absolute z-10 top-[-11px] left-[50%] translate-x-[-50%] border-[11px] border-x-transparent border-t-transparent border-b-white'></span>
+                        <TooltipContent className="relative pt-2">
+                            <span className="absolute z-10 top-[-11px] left-[50%] translate-x-[-50%] border-[11px] border-x-transparent border-t-transparent border-b-white"></span>
                             <div className="bg-white relative text-black shadow-md rounded-sm border border-gray-200">
                                 <Link
                                     href={'/user/profile'}
@@ -74,7 +74,10 @@ const NavHeader = () => {
                                 >
                                     Đơn mua
                                 </Link>
-                                <button onClick={handleLogout} className="block text-[16px] py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left">
+                                <button
+                                    onClick={handleLogout}
+                                    className="block text-[16px] py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left"
+                                >
                                     Đăng xuất
                                 </button>
                             </div>
