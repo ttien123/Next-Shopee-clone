@@ -69,7 +69,7 @@ const NavHeader = () => {
                                     Tài khoản của tôi
                                 </Link>
                                 <Link
-                                    href={'/'}
+                                    href={'/user/purchase'}
                                     className="block text-[16px] py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left"
                                 >
                                     Đơn mua

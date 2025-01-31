@@ -7,6 +7,11 @@ const nextConfig = {
                 hostname: 'api-ecom.duthanhduoc.com',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'down-vn.img.susercontent.com',
+                pathname: '/**',
+            },
         ],
     },
 };

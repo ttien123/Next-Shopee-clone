@@ -1,7 +1,7 @@
 import { QueryConfig } from "@/types/utils.type"
 import { clsx, type ClassValue } from "clsx"
 import isUndefined from 'lodash/isUndefined';
-
+import userImage from '../../public/user.svg'
 import omitBy from "lodash/omitBy"
 import { twMerge } from "tailwind-merge"
 
@@ -68,3 +68,5 @@ export const handleQueryConfig = (queryParams: QueryConfig) => {
 export const getIdFromSlugUrl = (slugUrl: string) => {
   return slugUrl.split('-i-')[1]
 }
+
+export const getAvatarUrl = (avatarName?: string) => (avatarName ? `https://api-ecom.duthanhduoc.com/images/${avatarName}` : userImage);

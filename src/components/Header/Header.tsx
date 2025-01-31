@@ -88,7 +88,7 @@ const Header = () => {
                                         )}
                                     </Link>
                                 </TooltipTrigger>
-                                <TooltipContent align="end" className="translate-x-[20px]" arrowPadding={4}>
+                                <TooltipContent align="end" className="" alignOffset={-22}>
                                     <span className="absolute z-10 top-[-11px] right-[4%] translate-x-[-50%] border-[11px] border-x-transparent border-t-transparent border-b-white"></span>
                                     <div className="bg-white relative shadow-md rounded-sm border border-gray-200 max-w-[400px] text-sm">
                                         {purchasesInCart && purchasesInCart.length > 0 ? (
@@ -106,7 +106,9 @@ const Header = () => {
                                                         >
                                                             <div className="mt-2 p-2 flex hover:bg-gray-100">
                                                                 <div className="flex-shrink-0">
-                                                                    <img
+                                                                    <Image
+                                                                        width={100}
+                                                                        height={100}
                                                                         src={purchase.product.image}
                                                                         alt={purchase.product.name}
                                                                         className="w-11 h-11 object-cover"

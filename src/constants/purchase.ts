@@ -7,3 +7,12 @@ export const purchasesStatus = {
     delivered: 4,
     canceled: 5,
 } as const;
+
+export const purchaseTabs = [
+    { status: purchasesStatus.all, name: 'Tất cả' },
+    { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
+    { status: purchasesStatus.waitForGetting, name: 'Chờ lấy hàng' },
+    { status: purchasesStatus.inProgress, name: 'Đang giao' },
+    { status: purchasesStatus.canceled, name: 'Đã hủy' },
+    { status: purchasesStatus.delivered, name: 'Đã giao' },
+];

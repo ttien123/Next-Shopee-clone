@@ -126,7 +126,7 @@ export class Http {
                 ...options?.headers,
             },
         };
-        return await this.instance.put<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
+        return await this.instance.put<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
     async delete<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
@@ -135,7 +135,7 @@ export class Http {
                 ...options?.headers,
             },
         };
-        return await this.instance.delete<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
+        return await this.instance.delete<ResponseType>(`${baseURL}${url}`, { params, ...configHeader });
     }
 
     private async handleRefreshToken() {
