@@ -4,7 +4,7 @@ import userApi from '@/apis/user.api';
 import useGetStore from '@/store/store';
 import { TypeUserInfoSchema, UserInfoSchema } from '@/utils/rules';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -17,6 +17,7 @@ import InputNumber from '@/components/InputNumber/InputNumber';
 import { toast } from 'react-toastify';
 import { setProfileToLS } from '@/utils/storage';
 import InputFile from '@/components/InputFile/InputFile';
+import Loading, { LoadingFullPage } from '@/components/Loading/Loading';
 
 const UserForm = () => {
     const [file, setFile] = useState<File>();
@@ -43,9 +44,14 @@ const UserForm = () => {
         watch,
     } = form;
 
-    const { data: profileData, refetch } = useQuery({
+    const {
+        data: profileData,
+        refetch,
+        isFetching,
+    } = useQuery({
         queryKey: ['profile'],
         queryFn: userApi.getProfile,
+        placeholderData: keepPreviousData,
     });
 
     const avatar = watch('avatar');
@@ -109,113 +115,118 @@ const UserForm = () => {
         setFile(file);
     };
     return (
-        <Form {...form}>
-            <form className="mt-8 flex flex-col-reverse md:flex-row md:items-start" onSubmit={onSubmit}>
-                <div className="mt-6 flex-grow md:pr-12 md:mt-0">
-                    <div className="flex flex-wrap flex-col sm:flex-row">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Email</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <div className="pt-3 text-gray-700">{profile?.email}</div>
+        <>
+            <Form {...form}>
+                <form className="mt-8 flex flex-col-reverse md:flex-row md:items-start" onSubmit={onSubmit}>
+                    <div className="mt-6 flex-grow md:pr-12 md:mt-0">
+                        <div className="flex flex-wrap flex-col sm:flex-row">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Email</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <div className="pt-3 text-gray-700">{profile?.email}</div>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-6">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Tên</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <Input placeholder="Tên" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-2">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Số điện thoại</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="phone"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <InputNumber placeholder="Số điện thoại" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-2">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Địa chỉ</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="address"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <Input placeholder="Địa chỉ" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                        <FormField
+                            control={form.control}
+                            name="date_of_birth"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <DateSelect
+                                            errorMessage={errors.date_of_birth?.message}
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize" />
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <ButtonCustom
+                                    type="submit"
+                                    className="flex rounded-sm items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
+                                >
+                                    Lưu
+                                </ButtonCustom>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-6">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Tên</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Input placeholder="Tên" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                    <div className="flex justify-center md:w-72 md:border-l md:border-l-gray-200">
+                        <div className="flex flex-col items-center">
+                            <div className="my-5 h-24 w-24">
+                                <Image
+                                    width={100}
+                                    height={100}
+                                    src={previewImage || getAvatarUrl(avatar)}
+                                    alt=""
+                                    className="h-full w-full rounded-full object-cover"
+                                />
+                            </div>
+                            <InputFile onChange={handleChangeFile} />
+                            <div className="mt-3 text-gray-400"></div>
+                            <div>Dụng lượng file tối đa 1 MB</div>
+                            <div>Định dạng:.JPEG, .PNG</div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-2">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Số điện thoại</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="phone"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <InputNumber placeholder="Số điện thoại" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-2">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Địa chỉ</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="address"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Input placeholder="Địa chỉ" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    <FormField
-                        control={form.control}
-                        name="date_of_birth"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormControl>
-                                    <DateSelect
-                                        errorMessage={errors.date_of_birth?.message}
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize" />
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <ButtonCustom
-                                type="submit"
-                                className="flex rounded-sm items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
-                            >
-                                Lưu
-                            </ButtonCustom>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex justify-center md:w-72 md:border-l md:border-l-gray-200">
-                    <div className="flex flex-col items-center">
-                        <div className="my-5 h-24 w-24">
-                            <Image
-                                width={100}
-                                height={100}
-                                src={previewImage || getAvatarUrl(avatar)}
-                                alt=""
-                                className="h-full w-full rounded-full object-cover"
-                            />
-                        </div>
-                        <InputFile onChange={handleChangeFile} />
-                        <div className="mt-3 text-gray-400"></div>
-                        <div>Dụng lượng file tối đa 1 MB</div>
-                        <div>Định dạng:.JPEG, .PNG</div>
-                    </div>
-                </div>
-            </form>
-        </Form>
+                </form>
+            </Form>
+            <LoadingFullPage
+                isLoading={updateProfileMutation.isPending || uploadAvatarMutation.isPending || isFetching}
+            />
+        </>
     );
 };
 

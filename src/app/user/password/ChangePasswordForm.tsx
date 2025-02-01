@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { TypeUserChangePassword, UserChangePassword } from '@/utils/rules';
 import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import InputNumber from '@/components/InputNumber/InputNumber';
+import { LoadingFullPage } from '@/components/Loading/Loading';
 
 const ChangePasswordSchema = UserChangePassword.refine(
     (values) => {
@@ -50,8 +51,6 @@ const ChangePasswordForm = () => {
                 autoClose: 1000,
             });
         } catch (error: any) {
-            console.log(error);
-            
             if (error.response?.status === 422) {
                 const formError = error.response?.data;
                 if (formError) {
@@ -66,75 +65,78 @@ const ChangePasswordForm = () => {
         }
     });
     return (
-        <Form {...form}>
-            <form className="mt-8 mr-auto max-w-2xl" onSubmit={onSubmit}>
-                <div className="mt-6 flex-grow md:pr-12 md:mt-0">
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-2">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Mật khẩu cũ</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <InputNumber placeholder="Mật khẩu cũ" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+        <>
+            <Form {...form}>
+                <form className="mt-8 mr-auto max-w-2xl" onSubmit={onSubmit}>
+                    <div className="mt-6 flex-grow md:pr-12 md:mt-0">
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-2">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Mật khẩu cũ</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <InputNumber placeholder="Mật khẩu cũ" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-2">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Mật khẩu mới</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="new_password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <InputNumber placeholder="Mật khẩu mới" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-2">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Mật khẩu mới</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="new_password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <InputNumber placeholder="Mật khẩu mới" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row mt-2">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Nhập lại mật khẩu</div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <FormField
-                                control={form.control}
-                                name="confirm_password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <InputNumber placeholder="Nhập lại mật khẩu" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <div className="flex flex-wrap flex-col sm:flex-row mt-2">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">Nhập lại mật khẩu</div>
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <FormField
+                                    control={form.control}
+                                    name="confirm_password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <InputNumber placeholder="Nhập lại mật khẩu" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize" />
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <ButtonCustom
-                                type="submit"
-                                className="flex rounded-sm items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
-                            >
-                                Lưu
-                            </ButtonCustom>
+                        <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
+                            <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize" />
+                            <div className="sm:w-[80%] sm:pl-5">
+                                <ButtonCustom
+                                    type="submit"
+                                    className="flex rounded-sm items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
+                                >
+                                    Lưu
+                                </ButtonCustom>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </Form>
+                </form>
+            </Form>
+            <LoadingFullPage isLoading={updateProfileMutation.isPending} />
+        </>
     );
 };
 

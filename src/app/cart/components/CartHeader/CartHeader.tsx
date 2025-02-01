@@ -1,6 +1,7 @@
 import NavHeader from '@/components/NavHeader/NavHeader';
 import Link from 'next/link';
 import SearchCartHeader from '../SearchCartHeader/SearchCartHeader';
+import { Suspense } from 'react';
 
 const CartHeader = () => {
     return (
@@ -24,7 +25,9 @@ const CartHeader = () => {
                             <div className="mx-4 h-6 md:h-8 w-[1px] bg-orange"></div>
                             <div className="capitalize text-orange md:text-xl">Giỏ hàng</div>
                         </Link>
-                        <SearchCartHeader />
+                        <Suspense fallback={null}>
+                            <SearchCartHeader />
+                        </Suspense>
                     </nav>
                 </div>
             </div>

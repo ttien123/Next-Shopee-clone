@@ -8,6 +8,7 @@ import useGetStore from '@/store/store';
 import { purchasesStatus } from '@/constants/purchase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { LoadingFullPage } from '@/components/Loading/Loading';
 
 interface props {
     product: ProductType;
@@ -124,6 +125,7 @@ const QuantityProduct = ({ product }: props) => {
                     Mua ngay
                 </button>
             </div>
+            <LoadingFullPage isLoading={addToCartMutation.isPending} />
         </>
     );
 };

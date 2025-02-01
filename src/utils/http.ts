@@ -18,8 +18,8 @@ export class Http {
             timeout: 10000,
             headers: {
                 'Content-Type': 'application/json',
-                'expire-access-token': 10,
-                'expire-refresh-token': 60*60
+                'expire-access-token': 15,
+                'expire-refresh-token': 60 * 60,
             },
         });
 
@@ -88,10 +88,10 @@ export class Http {
                                     });
                                 });
                             }
-                            if (typeof window !== 'undefined') {                               
+                            if (typeof window !== 'undefined') {
                                 return this.instance.post('/api/auth/logout', this.accessToken || '').then(() => {
                                     clearLS();
-                                })
+                                });
                             }
                         }
                     }
@@ -110,16 +110,16 @@ export class Http {
         };
         return await this.instance.post<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
-    async get<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
+    async get<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,
             },
         };
-        return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params, ...configHeader },);
+        return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params, ...configHeader });
     }
-    async put<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
+    async put<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
         const configHeader = {
             headers: {
@@ -128,14 +128,14 @@ export class Http {
         };
         return await this.instance.put<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
-    async delete<ResponseType>(url: string, params?: any, options: { baseUrl?: string, headers?: any } = {}) {
+    async delete<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
         const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,
             },
         };
-        return await this.instance.delete<ResponseType>(`${baseURL}${url}`, { params, ...configHeader });
+        return await this.instance.delete<ResponseType>(`${baseURL}${url}`, { ...params, ...configHeader });
     }
 
     private async handleRefreshToken() {

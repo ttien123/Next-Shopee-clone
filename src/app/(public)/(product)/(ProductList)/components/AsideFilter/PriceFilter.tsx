@@ -31,7 +31,13 @@ const PriceFilter = ({ queryConfig }: Props) => {
 
     function onSubmit(data: FormData) {
         router.push(
-            `/?${queryString.stringify({ ...queryConfig, price_max: data.price_max, price_min: data.price_min })}`,
+            `/?${queryString.stringify({
+                ...queryConfig,
+                price_max: data.price_max,
+                price_min: data.price_min,
+                page: 1,
+                limit: 20,
+            })}`,
         );
     }
 
@@ -39,7 +45,7 @@ const PriceFilter = ({ queryConfig }: Props) => {
         if (!queryConfig.price_max && !queryConfig.price_min) {
             form.reset();
         }
-    }, [queryConfig, form])
+    }, [queryConfig, form]);
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2">

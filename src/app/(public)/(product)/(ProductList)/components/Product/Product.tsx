@@ -1,6 +1,7 @@
 import ProductRating from '@/components/ProductRating/ProductRating';
 import { formatCurrency, formatNumberToSocialStyle, generateNameId } from '@/lib/utils';
 import { Product as productType } from '@/types/product.type';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
@@ -12,7 +13,9 @@ const Product = ({ product }: Props) => {
         <Link href={`/${generateNameId({ name: product.name, id: product._id })}`}>
             <div className="bg-white shadow rounded-sm overflow-hidden hover:translate-y-[-0.04rem] hover:shadow-md duration-100 transition-transform">
                 <div className="w-full pt-[100%] relative">
-                    <img
+                    <Image
+                        width={200}
+                        height={200}
                         src={product.image}
                         alt={product.name}
                         className="absolute top-0 left-0 bg-white w-full h-full object-cover"

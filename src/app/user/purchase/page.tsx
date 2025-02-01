@@ -1,9 +1,12 @@
+import { Suspense } from 'react';
 import HistoryPurchase from './HistoryPurchase';
 
 const page = () => {
     return (
         <div>
-            <HistoryPurchase />
+            <Suspense fallback={null}>
+                <HistoryPurchase />
+            </Suspense>
         </div>
     );
 };

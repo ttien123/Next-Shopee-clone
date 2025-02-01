@@ -84,7 +84,7 @@ const UserSideNav = () => {
                     Đổi mật khẩu
                 </Link>
                 <Link
-                    href={'user/purchase'}
+                    href={'/user/purchase'}
                     className={`flex mt-4 items-center capitalize  transition-colors ${
                         pathname === '/user/purchase' ? 'text-orange' : 'text-gray-600'
                     }`}

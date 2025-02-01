@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { produce } from 'immer';
 import keyBy from 'lodash/keyBy';
 import { toast } from 'react-toastify';
-import noProduct from '../../../../../../public/bgCart.png';
+import noProduct from '../../../../../public/bgCart.png';
 import useGetStore from '@/store/store';
 import purchaseApi from '@/apis/purchase.api';
 import { purchasesStatus } from '@/constants/purchase';
@@ -14,7 +14,7 @@ import QuantityController from '@/components/QuantityController';
 import { Purchase } from '@/types/purchase.type';
 import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import Image from 'next/image';
-import Loading from '@/components/Loading/Loading';
+import Loading, { LoadingFullPage } from '@/components/Loading/Loading';
 
 const PurchaseList = () => {
     const { extendedPurchases, setExtendedPurchases, productChoice } = useGetStore();
@@ -84,7 +84,7 @@ const PurchaseList = () => {
                 };
             }) || [];
         setExtendedPurchases(newExtendedPurchases);
-    }, [purchasesInCart, productChoice]);
+    }, [purchasesInCart, productChoice, extendedPurchases, setExtendedPurchases]);
 
     useEffect(() => {
         return () => {
@@ -366,6 +366,7 @@ const PurchaseList = () => {
                     </div>
                 </div>
             )}
+            <LoadingFullPage isLoading={buyProductsMutation.isPending || updatePurchaseMutation.isPending || deletePurchasesMutation.isPending} />
         </>
     );
 };

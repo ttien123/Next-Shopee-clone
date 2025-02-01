@@ -46,6 +46,8 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
                                         .stringify({
                                             ...queryConfig,
                                             category: categoryItem._id,
+                                            page: 1,
+                                            limit: 20,
                                         })
                                         .toString(),
                                 }}
@@ -85,7 +87,7 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
             <div className="bg-gray-300 h-[1px] my-4"></div>
             <div className="my-5">
                 <div>Khoảng giá</div>
-                <PriceFilter queryConfig={queryConfig}/>
+                <PriceFilter queryConfig={queryConfig} />
             </div>
             <div className="bg-gray-300 h-[1px] my-4"></div>
             <div className="text-sm">Đánh giá</div>
