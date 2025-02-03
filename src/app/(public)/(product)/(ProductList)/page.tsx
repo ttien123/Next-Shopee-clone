@@ -9,6 +9,23 @@ import Image from 'next/image';
 import bgNotFound from '../../../../../public/bgNotFound.png';
 import { handleQueryConfig } from '@/lib/utils';
 import { QueryConfig } from '@/types/utils.type';
+import { Metadata } from 'next';
+import envConfig from '@/config';
+import queryString from 'query-string';
+
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+    const queryConfig = handleQueryConfig(searchParams as QueryConfig);
+    const url = envConfig.NEXT_PUBLIC_URL + '/?' + queryString.stringify(queryConfig).toString();
+    return {
+      alternates: {
+        canonical: url
+      },
+    }
+}
 
 const page = async ({ searchParams }: { searchParams: QueryConfig }) => {
     const queryConfig = handleQueryConfig(searchParams);

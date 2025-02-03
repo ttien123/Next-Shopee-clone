@@ -3,6 +3,7 @@ import { clearLS, clearLSNoRedirect, setAccessTokenToLS, setRefreshTokenToLS } f
 import { AuthResponse, RefreshTokenResponse } from '@/types/auth.type';
 import { handleSplitAccessToken } from '@/lib/utils';
 import { toast } from 'react-toastify';
+import envConfig from '@/config';
 
 export class Http {
     instance: AxiosInstance;
@@ -102,7 +103,7 @@ export class Http {
     }
 
     async post<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
-        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const baseURL = options?.baseUrl === undefined ? `${envConfig.NEXT_PUBLIC_API_ENDPOINT}` : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,
@@ -111,7 +112,7 @@ export class Http {
         return await this.instance.post<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
     async get<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
-        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const baseURL = options?.baseUrl === undefined ? `${envConfig.NEXT_PUBLIC_API_ENDPOINT}` : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,
@@ -120,7 +121,7 @@ export class Http {
         return await this.instance.get<ResponseType>(`${baseURL}${url}`, { params, ...configHeader });
     }
     async put<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
-        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const baseURL = options?.baseUrl === undefined ? `${envConfig.NEXT_PUBLIC_API_ENDPOINT}` : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,
@@ -129,7 +130,7 @@ export class Http {
         return await this.instance.put<ResponseType>(`${baseURL}${url}`, params || undefined, configHeader);
     }
     async delete<ResponseType>(url: string, params?: any, options: { baseUrl?: string; headers?: any } = {}) {
-        const baseURL = options?.baseUrl === undefined ? 'https://api-ecom.duthanhduoc.com' : options.baseUrl;
+        const baseURL = options?.baseUrl === undefined ? `${envConfig.NEXT_PUBLIC_API_ENDPOINT}` : options.baseUrl;
         const configHeader = {
             headers: {
                 ...options?.headers,

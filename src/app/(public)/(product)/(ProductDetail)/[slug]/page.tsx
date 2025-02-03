@@ -1,10 +1,58 @@
 import productApi from '@/apis/product.api';
-import { formatCurrency, formatNumberToSocialStyle, getIdFromSlugUrl, rateSale } from '@/lib/utils';
+import { formatCurrency, formatNumberToSocialStyle, generateSlugUrl, getIdFromSlugUrl, rateSale } from '@/lib/utils';
 import { Product as ProductType, ProductList, productListConfig } from '@/types/product.type';
 import Product from '../../(ProductList)/components/Product/Product';
 import ProductRating from '@/components/ProductRating/ProductRating';
 import ImageProduct from './components/ImageProduct/ImageProduct';
 import QuantityProduct from './components/QuantityProduct/QuantityProduct';
+import { Metadata } from 'next';
+import envConfig from '@/config';
+import { htmlToText, htmlToTextForDescription } from '@/utils/server-utils';
+import { baseOpenGraph } from '@/shared-metadata';
+
+type Props = {
+    params: Promise<{ slug: string }>
+}
+
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+    const params = await props.params;
+    const id = getIdFromSlugUrl(params.slug)
+    const productDetailApi = await productApi.getProductDetail(id)
+    const product = productDetailApi.data.data;
+
+    if (!product) {
+        return {
+        title: 'notFound',
+        description: 'notFound'
+        }
+    }
+    const url =
+    envConfig.NEXT_PUBLIC_URL +
+    `/${generateSlugUrl({
+      name: product.name,
+      id: product._id
+    })}`
+    return {
+        ...baseOpenGraph,
+        title: product.name,
+        description: htmlToTextForDescription(product.description),
+        openGraph: {
+          title: product.name,
+          description: product.description,
+          url,
+          images: [
+            {
+              url: product.image
+            }
+          ]
+        },
+        alternates: {
+          canonical: url
+        }
+      }
+}
+
 
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
     const id = getIdFromSlugUrl(slug);
@@ -54,9 +102,9 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                                 <div className="text-gray-500 line-through">
                                     ₫{formatCurrency(product.price_before_discount)}
                                 </div>
-                                <div className="ml-3 text-3xl font-medium text-orange">
+                                <h2 className="ml-3 text-3xl font-medium text-orange">
                                     ₫{formatCurrency(product.price)}
-                                </div>
+                                </h2>
                                 <div className="ml-4 rounded-sm bg-orange px-1 py-[2px] text-xs font-semibold uppercase text-white">
                                     {rateSale(product.price_before_discount, product.price)} giảm
                                 </div>
@@ -71,7 +119,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                     <div className="bg-white p-4 shadow">
                         <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
                             <div className="mx-4 mt-12 mb-4 text-sm leading-loose">
-                                <div>{product.description}</div>
+                                <div>{htmlToText(product.description)}</div>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,20 @@
+import envConfig from "@/config";
 import ChangePasswordForm from "./ChangePasswordForm";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+    const url = envConfig.NEXT_PUBLIC_URL + `/user/purchase`
+  
+    return {
+      title: 'User purchase',
+      alternates: {
+        canonical: url
+      },
+      robots: {
+        index: false
+      }
+    }
+}
 
 const page = () => {
     return (

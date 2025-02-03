@@ -1,5 +1,22 @@
 import React from 'react';
 import UserForm from './UserForm';
+import { Metadata } from 'next';
+import envConfig from '@/config';
+
+
+export async function generateMetadata(): Promise<Metadata> {
+    const url = envConfig.NEXT_PUBLIC_URL + `/user/profile`
+  
+    return {
+      title: 'User Profile',
+      alternates: {
+        canonical: url
+      },
+      robots: {
+        index: false
+      }
+    }
+}
 
 const page = () => {
     return (
