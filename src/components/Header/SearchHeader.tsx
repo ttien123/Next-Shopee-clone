@@ -1,3 +1,4 @@
+'use client';
 import useSearchProducts from '@/hooks/useSearchProducts';
 
 const SearchHeader = () => {
@@ -12,7 +13,7 @@ const SearchHeader = () => {
                     placeholder="Free Ship Đơn Từ 0Đ"
                     {...register('name')}
                 />
-                <button className="rounded-sm py-2 px-6 flex-shink-0 bg-orange hover:opacity-90">
+                <button aria-label="Search" className="rounded-sm py-2 px-6 flex-shink-0 bg-orange hover:opacity-90">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

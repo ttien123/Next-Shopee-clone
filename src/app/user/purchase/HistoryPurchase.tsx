@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import queryString from 'query-string';
+import noProduct from '../../../../public/bgCart.png';
 
 const HistoryPurchase = () => {
     const queryParams: { status?: string } = useQueryParams();
@@ -50,7 +51,7 @@ const HistoryPurchase = () => {
                         ))}
                     </div>
                     <div>
-                        {!isFetching ? (
+                        {!isFetching && purchasesInCart && purchasesInCart.length > 0 && (
                             purchasesInCart?.map((purchase) => (
                                 <div
                                     key={purchase._id}
@@ -93,9 +94,13 @@ const HistoryPurchase = () => {
                                     </div>
                                 </div>
                             ))
-                        ) : (
-                            <Loading extendClassName="min-h-[50vh] bg-gray-100" />
                         )}
+                        {isFetching && <Loading extendClassName="min-h-[50vh] bg-gray-100" />}
+                        {!isFetching && purchasesInCart && purchasesInCart.length <= 0 && 
+                            <div className="p-2 mx-auto w-[300px] h-[300px] flex items-center justify-center flex-col">
+                                <Image src={noProduct} alt="No purchase" className="w-24 h-24" />
+                                <div className="mt-3">Chưa có sản phẩm</div>
+                            </div>}
                     </div>
                 </div>
             </div>

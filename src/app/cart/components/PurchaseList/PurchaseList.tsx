@@ -124,7 +124,7 @@ const PurchaseList = () => {
 
     const handleDeleteManyPurchase = () => {
         const purchaseIds = checkedPurchases.map((purchase) => purchase._id);
-        deletePurchasesMutation.mutate(purchaseIds);
+        purchaseIds.length > 0 && deletePurchasesMutation.mutate(purchaseIds);
     };
 
     const handleQuantity = (purchaseIndex: number, value: number, enable: boolean) => {

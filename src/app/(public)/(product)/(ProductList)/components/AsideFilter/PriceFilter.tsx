@@ -103,6 +103,7 @@ const PriceFilter = ({ queryConfig }: Props) => {
                 </div>
                 <ButtonCustom
                     type="submit"
+                    aria-label="Search"
                     className="w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange/80 flex items-center justify-center "
                 >
                     Áp dụng

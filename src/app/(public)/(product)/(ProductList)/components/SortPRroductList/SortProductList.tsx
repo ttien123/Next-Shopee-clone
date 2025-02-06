@@ -58,6 +58,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                 <div className="flex items-center flex-wrap gap-2">
                     <div>Sắp xếp theo</div>
                     <button
+                        aria-label="Search"
                         className={`h-8 px-4 capitalize text-sm ${
                             isActiveSortBy(sortBy.view)
                                 ? 'bg-orange text-white hover:bg-orange/80'
@@ -69,6 +70,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                     </button>
 
                     <button
+                        aria-label="Search"
                         className={`h-8 px-4 capitalize text-sm ${
                             isActiveSortBy(sortBy.createdAt)
                                 ? 'bg-orange text-white hover:bg-orange/80'
@@ -79,6 +81,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                         Mới nhất
                     </button>
                     <button
+                        aria-label="Search"
                         className={`h-8 px-4 capitalize text-sm ${
                             isActiveSortBy(sortBy.sold)
                                 ? 'bg-orange text-white hover:bg-orange/80'
@@ -89,6 +92,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                         Bán chạy
                     </button>
                     <select
+                        aria-label="Search"
                         className={`h-8 px-4 text-sm text-left outline-none ${
                             isActiveSortBy(sortBy.price)
                                 ? 'bg-orange text-white hover:bg-orange/80'
@@ -135,6 +139,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                             </span>
                         ) : (
                             <Link
+                                aria-label="Search"
                                 href={{
                                     pathname: '/',
                                     search: queryString
@@ -178,6 +183,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
                             </span>
                         ) : (
                             <Link
+                                aria-label="Search"
                                 href={{
                                     pathname: '/',
                                     search: queryString

@@ -17,7 +17,7 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
 
     return (
         <div className="py-4">
-            <Link href={'/'} className={`flex items-center font-bold ${!true ? 'text-orange' : ''}`}>
+            <Link href={'/'} aria-label="Search" className={`flex items-center font-bold ${!category ? 'text-orange' : ''}`}>
                 <svg viewBox="0 0 12 10" className="w-3 h-4 mr-3 fill-current icon-all-cate">
                     <g fillRule="evenodd" stroke="none" strokeWidth={1}>
                         <g transform="translate(-373 -208)">
@@ -40,6 +40,7 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
                     return (
                         <li className="py-2 pl-2" key={categoryItem._id}>
                             <Link
+                                aria-label="Search"
                                 href={{
                                     pathname: '/',
                                     search: queryString
@@ -64,7 +65,7 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
                     );
                 })}
             </ul>
-            <Link href={'/'} className="flex items-center font-bold mt-4 uppercase">
+            <Link href={'/'} aria-label="Search" className="flex items-center font-bold mt-4 uppercase">
                 <svg
                     enableBackground="new 0 0 15 15"
                     viewBox="0 0 15 15"
@@ -94,6 +95,7 @@ const AsideFilter = ({ categories, queryConfig }: Props) => {
             <RatingStars queryConfig={queryConfig} />
             <div className="bg-gray-300 h-[1px] my-4"></div>
             <Link
+                aria-label="Search"
                 href={`/?${queryString
                     .stringify(omit(queryConfig, ['price_min', 'price_max', 'category', 'rating_filter']))
                     .toString()}`}

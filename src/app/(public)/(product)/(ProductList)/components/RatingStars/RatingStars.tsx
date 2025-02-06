@@ -13,6 +13,7 @@ const RatingStars = ({ queryConfig }: Props) => {
                 .map((_, index) => (
                     <li className="py-1 pl-2" key={index}>
                         <Link
+                            aria-label="Search"
                             className="flex items-center text-sm"
                             href={`/?${queryString.stringify({ ...queryConfig, rating_filter: 5 - index })}`}
                         >
