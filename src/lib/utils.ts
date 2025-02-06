@@ -4,6 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import userImage from '../../public/user.svg'
 import omitBy from "lodash/omitBy"
 import { twMerge } from "tailwind-merge"
+import slugify from 'slugify'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -64,6 +65,10 @@ export const handleQueryConfig = (queryParams: QueryConfig) => {
     );
     return queryConfig;
 };
+
+export const generateSlugUrl = ({ name, id }: { name: string; id: string }) => {
+  return `${slugify(name)}-i-${id}`
+}
 
 export const getIdFromSlugUrl = (slugUrl: string) => {
   return slugUrl.split('-i-')[1]

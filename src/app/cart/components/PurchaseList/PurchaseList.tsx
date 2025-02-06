@@ -84,7 +84,7 @@ const PurchaseList = () => {
                 };
             }) || [];
         setExtendedPurchases(newExtendedPurchases);
-    }, [purchasesInCart, productChoice, extendedPurchases, setExtendedPurchases]);
+    }, [purchasesInCart, productChoice]);
 
     useEffect(() => {
         return () => {

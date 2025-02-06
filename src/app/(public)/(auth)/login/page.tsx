@@ -1,5 +1,16 @@
 import LoginForm from "./LoginForm"
 import Link from 'next/link';
+import { Metadata } from 'next';
+import envConfig from '@/config';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const url = envConfig.NEXT_PUBLIC_URL + '/login';
+  return {
+    alternates: {
+      canonical: url
+    },
+  }
+}
 
 const page = () => {
 return (
