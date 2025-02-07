@@ -2,10 +2,14 @@ import LoginForm from "./LoginForm"
 import Link from 'next/link';
 import { Metadata } from 'next';
 import envConfig from '@/config';
+import { baseOpenGraph } from "@/shared-metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const url = envConfig.NEXT_PUBLIC_URL + '/login';
   return {
+    openGraph: {
+      ...baseOpenGraph,
+            },
     alternates: {
       canonical: url
     },

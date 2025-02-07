@@ -34,10 +34,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       id: product._id
     })}`
     return {
-        ...baseOpenGraph,
         title: product.name,
         description: htmlToTextForDescription(product.description),
         openGraph: {
+            ...baseOpenGraph,
           title: product.name,
           description: product.description,
           url,

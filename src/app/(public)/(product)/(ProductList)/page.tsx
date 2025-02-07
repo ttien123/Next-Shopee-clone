@@ -12,6 +12,7 @@ import { QueryConfig } from '@/types/utils.type';
 import { Metadata } from 'next';
 import envConfig from '@/config';
 import queryString from 'query-string';
+import { baseOpenGraph } from '@/shared-metadata';
 
 type Props = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -21,9 +22,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     const queryConfig = handleQueryConfig(searchParams as QueryConfig);
     const url = envConfig.NEXT_PUBLIC_URL + '/?' + queryString.stringify(queryConfig).toString();
     return {
-      alternates: {
-        canonical: url
-      },
+        openGraph: {
+            ...baseOpenGraph,
+        },
+        alternates: {
+            canonical: url
+        },
     }
 }
 

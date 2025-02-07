@@ -2,10 +2,14 @@ import Link from 'next/link';
 import RegisterForm from './RegisterForm';
 import { Metadata } from 'next';
 import envConfig from '@/config';
+import { baseOpenGraph } from '@/shared-metadata';
 
 export async function generateMetadata(): Promise<Metadata> {
   const url = envConfig.NEXT_PUBLIC_URL + '/register';
   return {
+    openGraph: {
+      ...baseOpenGraph,
+    },
     alternates: {
       canonical: url
     },
