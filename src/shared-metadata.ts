@@ -5,7 +5,7 @@ export const baseOpenGraph = {
   siteName: 'Shopee Clone',
   images: [
     {
-      url: `${envConfig.NEXT_PUBLIC_URL}/banner.png`
+      url: `${envConfig.NEXT_PUBLIC_URL}/bgAuth.png`
     }
   ]
 }
