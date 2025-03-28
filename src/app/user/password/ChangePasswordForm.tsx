@@ -78,7 +78,7 @@ const ChangePasswordForm = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormControl>
-                                                <InputNumber placeholder="Mật khẩu cũ" {...field} />
+                                                <InputNumber type='password' placeholder="Mật khẩu cũ" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -95,7 +95,7 @@ const ChangePasswordForm = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormControl>
-                                                <InputNumber placeholder="Mật khẩu mới" {...field} />
+                                                <InputNumber type='password' placeholder="Mật khẩu mới" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -112,7 +112,7 @@ const ChangePasswordForm = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormControl>
-                                                <InputNumber placeholder="Nhập lại mật khẩu" {...field} />
+                                                <InputNumber type='password' placeholder="Nhập lại mật khẩu" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

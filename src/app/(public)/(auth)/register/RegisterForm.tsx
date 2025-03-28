@@ -7,6 +7,9 @@ import { AuthSchema, TypeAuthSchema } from '@/utils/rules';
 import ButtonCustom from '@/components/ButtonCustom/ButtonCustom';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/apis/auth.api';
+import useGetStore from '@/store/store';
+import { setProfileToLS } from '@/utils/storage';
+import { useRouter } from 'next/navigation';
 
 const RegisterSchema = AuthSchema.refine(
     (values) => {
@@ -27,6 +30,8 @@ const RegisterForm = () => {
         },
     });
 
+    const { setProfile } = useGetStore();
+    const router = useRouter();
     const registerMutation = useMutation({
         mutationFn: (body: TypeAuthSchema) => authApi.svRegister(body),
     });
@@ -34,7 +39,9 @@ const RegisterForm = () => {
     function onSubmit(data: TypeAuthSchema) {
         registerMutation.mutate(data, {
             onSuccess: (data) => {
-                console.log(data);
+                setProfile(data.data.data.user);
+                setProfileToLS(data.data.data.user);
+                router.push('/');
             },
             onError: (error: any) => {
                 const formError = error?.response?.data.data.data
